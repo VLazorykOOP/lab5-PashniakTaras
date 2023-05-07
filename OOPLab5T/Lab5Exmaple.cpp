@@ -3,7 +3,123 @@
 #include "Lab5Exmaple.h"
 using namespace std;
 
-namespace Exp4 {
+/*
+3) Створити ієрархію класів вектор і безпечний вектор з перевіркою виходу за
+межі.Безпечний вектор визначає змінні нижня й верхня межа Перевизначити вивід у
+потік і введення з потоку, конструктор копіювання, оператор присвоювання через
+відповідні функції базового класу.
+*/
+
+class Vector {
+public:
+	string Name;
+	float Magnitude;
+
+	Vector() {
+	}
+	Vector(string name, float magnitude) {
+		this->Name = name;
+		this->Magnitude = magnitude;
+
+	}
+
+	Vector& operator=(Vector& a) {
+		this->Name = a.Name;
+		this->Magnitude = a.Magnitude;
+		return *this;
+	}
+
+	Vector(const Vector& ref_Point)
+	{
+		this->Name = ref_Point.Name;
+		this->Magnitude = ref_Point.Magnitude;
+	}
+};
+
+ostream& operator<<(ostream& os, Vector& n) {
+	cout << " Name of Vector : " << n.Name << endl << " Magnitude: " << n.Magnitude;
+	return os;
+}
+istream& operator>>(istream& iso, Vector& n) {
+	cin >> n.Name >> n.Magnitude;
+	return iso;
+}
+
+class SafeVector : public Vector {
+public:
+	float LowerBound, UpperBound;
+
+	SafeVector() {
+	}
+	SafeVector(float lowerBound, float upperBound, string name, float magnitude) {
+		this->Name = name;
+		this->Magnitude = magnitude;
+		this->LowerBound = lowerBound;
+		this->UpperBound = upperBound;
+	}
+
+};
+ostream& operator<<(ostream& os, SafeVector& n) {
+	cout << "Name of Vector: " << n.Name << endl << " Magnitude: " << n.Magnitude << endl;
+	cout << " Lower Bound: " << n.LowerBound << endl << " UpperBound: " << n.UpperBound << endl;
+	return os;
+}
+istream& operator>>(istream& iso, SafeVector& n) {
+	cin >> n.Name >> n.Magnitude >> n.LowerBound >> n.UpperBound;
+	return iso;
+}
+
+int mainExample3() {
+	float lbound, ubound;
+	cout << endl << "Set lower bound of the vector:";
+	cin >> lbound;
+	cout << endl << "Set upper bound of the vector:";
+	cin >> ubound;
+
+	Vector obj1 = Vector("AB", 23.4);
+	cout << "1: " << obj1 << endl;
+	cout << endl << "New values:" << endl;
+	cin >> obj1;
+	cout << "New 1: " << endl << obj1 << endl;
+
+	
+
+	SafeVector obj2 = SafeVector(lbound, ubound, "BC", 17);
+	cout << "2: " << obj2;
+	cout << endl << "New values:" << endl;
+	cin >> obj2;
+	cout << "New 2: " << obj2 << endl;
+
+	Vector obj3 = Vector(obj2);
+	cout << "3: " << obj3 << endl;
+
+	SafeVector obj4 = SafeVector(5, 19, "KM", 15);
+	obj4 = obj4;
+	cout << "New 3: " << obj3;
+	return 0;
+
+	/*Vector obj1 = Vector("AB", 23.4);
+	cout << "1: " << obj1 << endl;
+	cout << endl << "New values:" << endl;
+	cin >> obj1;
+	cout << " New 1: " << obj1 << endl;
+
+	SafeVector obj2 = SafeVector(8, 12, "BC", 17);
+	cout << "2: " << obj2;
+	cout << endl << "New values:" << endl;
+	cin >> obj2;
+	cout << "New 2: " << obj2 << endl;
+
+	Vector obj3 = Vector(obj2);
+	cout << "3: " << obj3 << endl;
+
+	SafeVector obj4 = SafeVector(5, 19, "KM", 15);
+	obj4 = obj4;
+	cout << "New 3: " << obj3;
+	return 0;*/
+}
+
+/* namespace Exp4 {
 	class Base {
 		int pv;
 		void fpv() {
@@ -910,3 +1026,4 @@ istream& operator>>(istream& is, Adult& a) {
 		is >> a.nameChild[i];
 	return is;
 }
+*/
