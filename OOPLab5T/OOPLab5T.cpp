@@ -20,8 +20,8 @@ int main()
     cout << endl << "Select task: ";
     cin >> chain;
     //if (chain == 1) chain = mainExample1();
-    if (chain == 2) chain = mainExample2();
-    //if (chain == 3) chain = mainExample3();
+    //if (chain == 2) chain = mainExample2();
+    if (chain == 3) chain = mainExample3();
     //if (chain == 4) chain = mainExample4();
     //if (chain == 5) chain = mainExample5();
 
