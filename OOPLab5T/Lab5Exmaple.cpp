@@ -390,10 +390,11 @@ class SafeVector : public Vector {
 protected:
     int lowerBound;
     int upperBound;
+    int r{ 0 };
 
 public:
     SafeVector(int size_, int lowerBound_, int upperBound_) :
-        Vector{ size_ }, lowerBound{ lowerBound_ }, upperBound{ upperBound_ } {
+        Vector{ size_ }, lowerBound{ lowerBound_ }, upperBound{ lowerBound_+size_ } {
         cout << "SafeVector created" << endl;
     }
 
@@ -423,16 +424,17 @@ public:
     int get(int i) const override {
         if (i < lowerBound || i > upperBound) {
             cerr << "Index out of bounds" << endl;
-            exit(1);
+            return this->r;
         }
-        return data[i];
+        return data[i-lowerBound];
     }
 
     void set(int i, int value) override {
         cout << "SafeVector Generated: " << i << value << endl;
         if (value < lowerBound || value > upperBound) {
             cerr << "Index out of bounds" << endl;
-            //exit(1);
+            //exit(1); 
+            return;
         }
         data[i] = value;
     }
